@@ -1,4 +1,6 @@
 # начало разработки AI bot
+# ссылка на проект GITHUB
+# https://github.com/n1k20/AI-bot.git
 from asyncio import sleep
 from aiohttp import ClientSession, Bot
 text = 'Здравствуйте, Я умный бот. Если вы чувствуете, что иногда тратите свое время впустую, то я могу вам помочь. Выберите интересующие вас теги: '
