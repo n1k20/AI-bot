@@ -49,7 +49,7 @@ async def echo(message: types.Message, bot=Bot) -> None:
     else:
         await message.answer(message.text)
 
-
+# старт проекта
 async def main() -> None:
     await dispatcher.start_polling(bot)
 
