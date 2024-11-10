@@ -1,7 +1,8 @@
 import asyncio
+
 import aiohttp  # pip install aiohttp
 
-TOKEN = 'your TOKEN here'
+from config import TOKEN
 
 URL = f'https://api.telegram.org/bot{TOKEN}/'
 
