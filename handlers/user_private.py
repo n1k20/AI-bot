@@ -1,47 +1,51 @@
-import asyncio
-from aiogram import types, Bot, Router
+from aiogram import types, Router
 from aiogram.filters import CommandStart, Command
-
-
 
 user_private_router = Router()
 
 
-"""
-Текст или что-то другое для /start проекта
-проработать текст для входа в него
-то есть описание назначения бота 
-
-"""
-
-
 @user_private_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
-    """
-    Это функция отправляет пользователю начальный текст при его входе
-    :param message: класс сообщение
-    :return: ответ пользователю
-    """
     await message.answer('Hello')
 
 
-"""
-Это самая сложная часть. Надо будет продумать диалог с пользователем.
-"""
-
-"""
-Если что для понимания message.answer отправляет текстовое сообщение пользователю
-это может быть как в /start так и далее 
-но там можно по разному и стоит хорошо изучить библиотеку
-"""
-
-"""
-Здесь в команде Command передается команда /menu
-и действия который бы появились у него
-"""
 @user_private_router.message(Command('menu'))
-async def echo(message: types.Message, bot=Bot) -> None:
+async def echo(message: types.Message) -> None:
     await message.answer("Моя первая команда, ураааа !!!")
+
+
+@user_private_router.message(Command('help'))
+async def help(message: types.Message) -> None:
+    await message.answer('Я помогу вам ')
+
+
+@user_private_router.message(Command('about'))
+async def about_cmd(message: types.Message) -> None:
+    await message.answer('Здесь описание нашего тг бота')
+
+
+@user_private_router.message(Command('payment'))
+async def payment_cmd(message: types.Message) -> None:
+    await message.answer('На пожертвование разработчиков и улучшение работы бота')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@ import os
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
+from aiogram.types import BotCommandScopeDefault
 # библиотека для защиты TOKEN
 from dotenv import find_dotenv, load_dotenv
 
@@ -28,12 +29,9 @@ ALLOWED_UPDATES = ["message, edited_message"]
 
 # старт проекта
 async def main() -> None:
-    """
-
-    :return:
-    """
     await bot.delete_webhook(drop_pending_updates=True)
-    await dispatcher.start_polling(bot, allowed_updates=["message"])
+    await bot.set_my_commands(commands=[], scope=types.BotCommandScopeAllPrivateChats())
+    await dispatcher.start_polling(bot, allowed_updates=ALLOWED_UPDATES)
 
 
 asyncio.run(main())
