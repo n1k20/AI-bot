@@ -14,23 +14,23 @@ user_private_router = Router()
 """
 
 
-@dispatcher.message(CommandStart())
+@user_private_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
     await message.answer('Hello')
 
 
 """
-Это самая сложная часть. Надо будет продумать диалог с пользователем, как он будет выглядеть.
-Но я думаю в плане mMVP это пока не надо 
+Это самая сложная часть. Надо будет продумать диалог с пользователем.
 """
 
 """
 Если что для понимания message.answer отправляет текстовое сообщение пользователю
 это может быть как в /start так и далее 
+но там можно по разному и стоит хорошо изучить библиотеку
 """
 
 
-@dispatcher.message()
+@user_private_router.message()
 async def echo(message: types.Message, bot=Bot) -> None:
     await bot.send_message(message.from_user.id, 'Ответ')
     user_words = message.text.lower().split()
