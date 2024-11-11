@@ -1,18 +1,19 @@
 import asyncio
+import os
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
+# библиотека для защиты TOKEN
+from dotenv import find_dotenv, load_dotenv
 
-from config import TOKEN
-
+# ищет файл
+load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
-bot = Bot(token=TOKEN)
-
+bot = Bot(token=os.getenv('TOKEN'))
 
 # диспетчер через который мы будем все делать
 dispatcher = Dispatcher()
-
 
 """
 Текст или что-то другое для /start проекта
@@ -36,6 +37,8 @@ async def cmd_start(message: types.Message) -> None:
 Если что для понимания message.answer отправляет текстовое сообщение пользователю
 это может быть как в /start так и далее 
 """
+
+
 @dispatcher.message()
 async def echo(message: types.Message, bot=Bot) -> None:
     await bot.send_message(message.from_user.id, 'Ответ')
@@ -45,12 +48,14 @@ async def echo(message: types.Message, bot=Bot) -> None:
     if any(word in answer_one for word in user_words):
         await message.answer('Приветствую вас в моем чате. AI bot !!!!')
     elif len(user_words[0]) > 0:
-        await message.answer('')
+        await message.answer('Но почему бота писать так сложно')
     else:
         await message.answer(message.text)
 
+
 # старт проекта
 async def main() -> None:
+    await bot.delete_webhook(drop_pending_updates=True)
     await dispatcher.start_polling(bot)
 
 
