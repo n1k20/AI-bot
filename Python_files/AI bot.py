@@ -28,6 +28,10 @@ ALLOWED_UPDATES = ["message, edited_message"]
 
 # старт проекта
 async def main() -> None:
+    """
+
+    :return:
+    """
     await bot.delete_webhook(drop_pending_updates=True)
     await dispatcher.start_polling(bot, allowed_updates=["message"])
 

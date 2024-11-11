@@ -1,6 +1,7 @@
 import asyncio
 from aiogram import types, Bot, Router
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
+
 
 
 user_private_router = Router()
@@ -16,6 +17,11 @@ user_private_router = Router()
 
 @user_private_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
+    """
+    Это функция отправляет пользователю начальный текст при его входе
+    :param message: класс сообщение
+    :return: ответ пользователю
+    """
     await message.answer('Hello')
 
 
@@ -29,16 +35,22 @@ async def cmd_start(message: types.Message) -> None:
 но там можно по разному и стоит хорошо изучить библиотеку
 """
 
-
-@user_private_router.message()
+"""
+Здесь в команде Command передается команда /menu
+и действия который бы появились у него
+"""
+@user_private_router.message(Command('menu'))
 async def echo(message: types.Message, bot=Bot) -> None:
-    await bot.send_message(message.from_user.id, 'Ответ')
-    user_words = message.text.lower().split()
-    answer_one = ['hello', 'привет', 'good day', 'hi', 'здравствуйте']
+    await message.answer("Моя первая команда, ураааа !!!")
 
-    if any(word in answer_one for word in user_words):
-        await message.answer('Приветствую вас в моем чате. AI bot !!!!')
-    elif len(user_words[0]) > 0:
-        await message.answer('Но почему бота писать так сложно')
-    else:
-        await message.answer(message.text)
+
+
+
+
+
+
+
+
+
+
+
