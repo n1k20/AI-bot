@@ -4,4 +4,6 @@ private_cmd = [BotCommand(command="menu", description="Просмотреть м
                BotCommand(command="about", description="Информация о боте"),
                BotCommand(command="help", description="Помощь если что-то непонятно"),
                BotCommand(command="payment", description="Поддержка разработчиков денежными средствами"),
-               BotCommand(command="profile", description="Информация о вас и вашем статусе")]
+               BotCommand(command="profile", description="Информация о вас и вашем статусе"),
+               BotCommand(command="start", description="Старт бота")]
+

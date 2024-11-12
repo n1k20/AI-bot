@@ -11,7 +11,7 @@ user_private_router.message.filter(ChatTypeFilter(["private"]))
 @user_private_router.message(Command('start'))
 @user_private_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
-    await message.answer('Привет ! Я умный бот. Я помогу тебе не тратить кучу времени на поиск'
+    await message.answer(f'Привет {message.from_user.full_name} ! Я умный бот. Я помогу тебе не тратить кучу времени на поиск'
                          ' ненужной тебе информации')
 
 
@@ -39,7 +39,8 @@ async def payment_cmd(message: types.Message) -> None:
 
 @user_private_router.message(Command('profile'))
 async def profile_cmd(message: types.Message) -> None:
-    await message.answer("Profile")
+    await message.answer("You profile:")
+    await message.answer("DATA:")
     await message.answer(f"{message.from_user.first_name}")
     await message.answer(f"{message.from_user.last_name}")
     await message.answer(f"@{message.from_user.username}")
