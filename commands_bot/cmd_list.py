@@ -1,10 +1,10 @@
 from aiogram.types import BotCommand
 
 # список всех команд которые находятся в menu
-private_cmd = [BotCommand(command="menu", description="Просмотреть меню"),
+private_cmd = [BotCommand(command="menu", description="Информация меню"),
                BotCommand(command="about", description="Информация о боте"),
-               BotCommand(command="help", description="Помощь если что-то непонятно"),
-               BotCommand(command="payment", description="Поддержка разработчиков денежными средствами"),
-               BotCommand(command="profile", description="Информация о вас и вашем статусе"),
-               BotCommand(command="start", description="Старт бота")]
+               BotCommand(command="help", description="Помощь"),
+               BotCommand(command="payment", description="Поддержка разработчиков"),
+               BotCommand(command="profile", description="Ваш профиль"),
+               BotCommand(command="start", description="Начало работы с ботом")]
 
