@@ -2,14 +2,14 @@ import asyncio
 import os
 
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart
-from aiogram.types import BotCommandScopeAllPrivateChats
 # библиотека для защиты TOKEN
 from dotenv import find_dotenv, load_dotenv
 
-from bot_commands.cmd_list import private_cmd
+from commands_bot.cmd_list import private_cmd
 from handlers.user_private import user_private_router
 from handlers.user_group import user_group_router
+
+
 
 
 # ищет файл

@@ -1,8 +1,9 @@
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
+from filters.chat_types import ChatTypeFilter
 
 user_private_router = Router()
-
+user_private_router.message.filter(ChatTypeFilter(["private"]))
 
 @user_private_router.message((F.text.lower().contains("привет")) | (F.text.lower().contains("здравствуйте")))
 @user_private_router.message(CommandStart())
@@ -29,3 +30,7 @@ async def about_cmd(message: types.Message) -> None:
 @user_private_router.message(Command('payment'))
 async def payment_cmd(message: types.Message) -> None:
     await message.answer('На пожертвование разработчиков и улучшение работы бота')
+
+@user_private_router.message(Command('profile'))
+async def profile_cmd(message: types.Message) -> None:
+    await message.answer('Это ваш профиль')
