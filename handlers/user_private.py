@@ -27,15 +27,14 @@ async def help(message: types.Message) -> None:
 
 @user_private_router.message(or_f(Command('about'), F.text.lower().contains("о боте")))
 async def about_cmd(message: types.Message) -> None:
-    await message.answer("Разработчики:")
-    await message.answer("Nikolai Borgoyakov (n1k17)")
-    await message.answer("Костров")
+    await message.answer(f"Разработчики: Nikolai Borgoyakov (TG - @mayflower17 или n1k17) - разработчик бота")
+    await message.answer(f"Владислав Костров - аналитик")
 
 
 @user_private_router.message((F.text.lower().contains("доставк")) | (F.text.lower() == 'варианты доставки'))
 @user_private_router.message(Command('payment'))
 async def payment_cmd(message: types.Message) -> None:
-    await message.answer('На пожертвование разработчиков и улучшение работы бота')
+    await message.answer('Можете перевести средства разработчикам в команде /about')
 
 
 @user_private_router.message(Command('profile'))
