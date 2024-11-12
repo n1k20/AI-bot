@@ -11,8 +11,9 @@ user_private_router.message.filter(ChatTypeFilter(["private"]))
 @user_private_router.message(Command('start'))
 @user_private_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
-    await message.answer(f'Привет {message.from_user.full_name} ! Я умный бот. Я помогу тебе не тратить кучу времени на поиск'
-                         ' ненужной тебе информации')
+    await message.answer(
+        f'Привет {message.from_user.full_name} ! Я умный бот. Я помогу тебе не тратить кучу времени на поиск'
+        ' ненужной тебе информации')
 
 
 @user_private_router.message(or_f(Command('menu'), F.text.lower().contains("меню")))

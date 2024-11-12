@@ -7,4 +7,3 @@ private_cmd = [BotCommand(command="menu", description="Информация ме
                BotCommand(command="payment", description="Поддержка разработчиков"),
                BotCommand(command="profile", description="Ваш профиль"),
                BotCommand(command="start", description="Начало работы с ботом")]
-
