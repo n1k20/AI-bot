@@ -1,5 +1,7 @@
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
+from aiogram.enums import ParseMode
+from aiogram.utils.formatting import as_list, as_marked_section, Bold
 
 from filters.chat_types import ChatTypeFilter
 from keyboard import reply
@@ -21,7 +23,19 @@ async def cmd_start(message: types.Message) -> None:
 
 @user_private_router.message(or_f(Command('menu'), F.text.lower().contains("меню")))
 async def echo(message: types.Message) -> None:
-    await message.answer("Presssss F", reply_markup=reply.del_keyboard)
+    text = as_list(
+        as_marked_section(
+            Bold("Menu bot"),
+            "Я могу многое 🤖 "
+            "Но моя главная особенность это иметь возможность иметь данные по тематике которая тебя интересует 🛄 "
+            "Это моя ключевая идея"
+    )),
+    as_marked_section(
+        Bold("Что я не могу делать"),
+        "Пока нет искуственного интеллекта"
+    ),
+    sep='\n----------------------------------\n'
+    await message.answer("<b>Presssss F:</b>", parse_mode=ParseMode.HTML, reply_markup=reply.del_keyboard)
 
 
 @user_private_router.message(or_f(Command('help'), F.text.lower().contains("помощь")))
@@ -36,17 +50,40 @@ async def about_cmd(message: types.Message) -> None:
     await message.answer(f"Владислав Костров - аналитик ")
 
 
-@user_private_router.message((F.text.lower().contains("доставк")) | (F.text.lower() == 'варианты доставки'))
+@user_private_router.message((F.text.lower().contains("поддержка")) | (F.text.lower() == 'варианты оплаты'))
 @user_private_router.message(Command('payment'))
 async def payment_cmd(message: types.Message) -> None:
-    await message.answer('Можете перевести средства разработчикам в команде /about', reply_markup=reply.del_keyboard)
+    text = as_marked_section(Bold("Варианты оплаты"),
+                             "💳 картой в боте",
+                             "💵 Переводом на Сбер",
+                             marker='✅ ')
+    await message.answer(text.as_html(), reply_markup=reply.del_keyboard)
 
 
 @user_private_router.message(Command('profile'))
 async def profile_cmd(message: types.Message) -> None:
-    await message.answer("You profile:")
+    await message.answer("<b> You profile: </b>", parse_mode=ParseMode.HTML)
     await message.answer("DATA:")
     await message.answer(f"{message.from_user.first_name}")
     await message.answer(f"{message.from_user.last_name}")
     await message.answer(f"@{message.from_user.username}")
     await message.answer(f"{message.from_user.id}")
+
+
+
+@user_private_router.message(F.contact)
+async def contact_cmd(message: types.Message) -> None:
+    await message.answer("Ваш номер телефона")
+    await message.answer(str(message.contact.phone_number))
+
+@user_private_router.message(F.location)
+async def location_cmd(message: types.Message) -> None:
+    await message.answer("Ваше местоположение")
+    await message.answer(str(message.location))
+
+
+
+
+
+
+

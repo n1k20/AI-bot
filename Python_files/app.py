@@ -2,7 +2,8 @@ import asyncio
 import os
 
 from aiogram import Bot, Dispatcher, types
-
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 # библиотека для защиты TOKEN
 from dotenv import find_dotenv, load_dotenv
 
@@ -17,7 +18,7 @@ from handlers.user_group import user_group_router
 load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
-bot = Bot(token=os.getenv('TOKEN'))
+bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 ALLOWED_UPDATES = ["message, edited_message"]
 
 # диспетчер через который мы будем все делать

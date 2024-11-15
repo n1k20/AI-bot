@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, KeyboardButtonPollType
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 start_keyboard = ReplyKeyboardMarkup(
     keyboard=[
@@ -36,12 +36,13 @@ start_keyboard_3.attach(start_keyboard_2)
 start_keyboard_3.row(KeyboardButton(text="Отзыв о проекте"))
 
 
+
 start_keyboard_4 = ReplyKeyboardMarkup(
     keyboard=[[
-        KeyboardButton(text="Сделать опрос ", request_pull=KeyboardButtonPullType(())),
+        KeyboardButton(text="Сделать опрос ", request_pull=KeyboardButtonPollType()),
     ],
         [
-            KeyboardButton(text="Отправить номер ", request_contact=True)
+            KeyboardButton(text="Отправить номер ", request_contact=True),
             KeyboardButton(text="Отправить местоположение", request_location=True)
         ]
     ],
