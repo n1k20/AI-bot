@@ -19,6 +19,8 @@ load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
 bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+bot.my_admins_list = []
+
 ALLOWED_UPDATES = ["message, edited_message"]
 
 # диспетчер через который мы будем все делать
