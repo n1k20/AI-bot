@@ -34,9 +34,9 @@ async def change_product(message: types.Message):
     await message.answer("ОК, вот список настроек")
 
 
-@admin_router.message(F.text == "Удалить товар")
+@admin_router.message(F.text == "Удалить ...")
 async def delete_product(message: types.Message):
-    await message.answer("Выберите товар(ы) для удаления")
+    await message.answer("Выберите ...")
 
 
 # Код ниже для машины состояний (FSM)
@@ -59,9 +59,7 @@ class AddProduct(StatesGroup):
 # Становимся в состояние ожидания ввода name
 @admin_router.message(StateFilter(None), F.text == "Добавить товар")
 async def add_product(message: types.Message, state: FSMContext):
-    await message.answer(
-        "Введите название товара", reply_markup=types.ReplyKeyboardRemove()
-    )
+    await message.answer("Введите название товара", reply_markup=types.ReplyKeyboardRemove())
     await state.set_state(AddProduct.name)
 
 

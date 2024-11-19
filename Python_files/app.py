@@ -4,6 +4,7 @@ import os
 from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.fsm.strategy import FSMStrategy
 # библиотека для защиты TOKEN
 from dotenv import find_dotenv, load_dotenv
 
@@ -24,7 +25,7 @@ bot.my_admins_list = []
 ALLOWED_UPDATES = ["message, edited_message"]
 
 # диспетчер через который мы будем все делать
-dispatcher = Dispatcher()
+dispatcher = Dispatcher(fsm_strategy=FSMStrategy.USER_IN_CHAT)
 dispatcher.include_router(user_private_router)
 dispatcher.include_router(user_group_router)
 
