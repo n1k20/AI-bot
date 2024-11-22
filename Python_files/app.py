@@ -9,11 +9,10 @@ from aiogram.fsm.strategy import FSMStrategy
 from dotenv import find_dotenv, load_dotenv
 
 from commands_bot.cmd_list import private_cmd
+from handlers.admin_private import admin_router
 from handlers.user_private import user_private_router
 from handlers.user_group import user_group_router
-
-
-
+from middlewares.data_base import CounterMiddleware
 
 # ищет файл
 load_dotenv(find_dotenv())
@@ -24,10 +23,13 @@ bot.my_admins_list = []
 
 ALLOWED_UPDATES = ["message, edited_message"]
 
+admin_router.message.middleware(CounterMiddleware)
+
 # диспетчер через который мы будем все делать
 dispatcher = Dispatcher(fsm_strategy=FSMStrategy.USER_IN_CHAT)
 dispatcher.include_router(user_private_router)
 dispatcher.include_router(user_group_router)
+
 
 # великий main
 async def main():
@@ -36,6 +38,7 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=True)
 
     await bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
+
     # в private_cmd список всех команд в menu для приватного бота
     await bot.set_my_commands(commands=private_cmd, scope=types.BotCommandScopeAllPrivateChats())
 

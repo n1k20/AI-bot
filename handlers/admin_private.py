@@ -10,33 +10,33 @@ admin_router = Router()
 admin_router.message.filter(ChatTypeFilter(["private"]), IsAdmin())
 
 ADMIN_KB = get_keyboard(
-    "Добавить товар",
-    "Изменить товар",
-    "Удалить товар",
-    "Я так, просто посмотреть зашел",
+    "Добавить ...",
+    "Изменить ...",
+    "Удалить ...",
+    "Да, ничего",
     placeholder="Выберите действие",
     sizes=(2, 1, 1),
 )
 
 
-@admin_router.message(Command("admin"))
+@admin_router.message(Command("add_things"))
 async def admin_features(message: types.Message):
     await message.answer("Что хотите сделать?", reply_markup=ADMIN_KB)
 
 
 @admin_router.message(F.text.contains("Я так, просто посмотреть зашел"))
 async def starring_at_product(message: types.Message):
-    await message.answer("ОК, вот список возможностей бота")
+    await message.answer("Cписок возможностей бота")
 
 
 @admin_router.message(F.text.contains("Изменить настройки"))
 async def change_product(message: types.Message):
-    await message.answer("ОК, вот список настроек")
+    await message.answer("Список настроек")
 
 
-@admin_router.message(F.text == "Удалить ...")
+@admin_router.message(F.text.contains("Удалить"))
 async def delete_product(message: types.Message):
-    await message.answer("Выберите ...")
+    await message.answer("Выберите, что удалить")
 
 
 # Код ниже для машины состояний (FSM)
@@ -57,9 +57,9 @@ class AddProduct(StatesGroup):
 
 
 # Становимся в состояние ожидания ввода name
-@admin_router.message(StateFilter(None), F.text == "Добавить товар")
+@admin_router.message(StateFilter(None), F.text == "Добавить ...")
 async def add_product(message: types.Message, state: FSMContext):
-    await message.answer("Введите название товара", reply_markup=types.ReplyKeyboardRemove())
+    await message.answer("Введите название ...", reply_markup=types.ReplyKeyboardRemove())
     await state.set_state(AddProduct.name)
 
 
@@ -83,7 +83,7 @@ async def back_step_handler(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
 
     if current_state == AddProduct.name:
-        await message.answer('Предидущего шага нет, или введите название товара или напишите "отмена"')
+        await message.answer('Предидущего шага нет, или введите название ... или напишите "отмена"')
         return
 
     previous = None
