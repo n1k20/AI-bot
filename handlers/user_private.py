@@ -12,7 +12,10 @@ user_private_router.message.filter(ChatTypeFilter(["private"]))
 
 @user_private_router.message(or_f(CommandStart(), Command('start'), F.text.contains("💼 Начало работы с ботом")))
 async def cmd_start(message: types.Message) -> None:
-    await message.answer(f'{message.from_user.full_name}', reply_markup=reply.start_keyboard)
+    text = as_list(as_marked_section(Bold("Здравствуйте! 💐"),
+                                     "Рад вас видеть, я - Бот, который поможет тебе сэкономить "
+                                     "времяпрепровождение в Telegram. Нажми /about или 🤖 О боте, чтобы узнать больше"))
+    await message.answer(text.as_html(), reply_markup=reply.start_keyboard)
 
 
 @user_private_router.message(or_f(Command('menu'), F.text.contains("📁 Меню")))
@@ -37,11 +40,11 @@ async def menu(message: types.Message) -> None:
 @user_private_router.message(or_f(Command('help'), F.text.lower().contains("🆘 Помощь")))
 async def help_cmd(message: types.Message) -> None:
     text = as_list(as_marked_section(Bold("Команды:", parse_mode=ParseMode.HTML),
-                   "🔧 /menu- Здесь находятся основные кнопки с командами, тут же вы и задаете свои приоритеты и свое дальнейшее взаимодействие с ботом",
-                   "📑 /about- Здесь содержится информация об ключевой задаче бота",
-                   "💳 /payment-  Пожертвование разработчикам для дальнейшего улучшения качества и функционала бота",
-                   "🩹 /support - Поддержка"),
-    sep="                                                                ")
+                                     "🔧 /menu- Здесь находятся основные кнопки с командами, тут же вы и задаете свои приоритеты и свое дальнейшее взаимодействие с ботом",
+                                     "📑 /about- Здесь содержится информация об ключевой задаче бота",
+                                     "💳 /payment-  Пожертвование разработчикам для дальнейшего улучшения качества и функционала бота",
+                                     "🩹 /support - Поддержка"),
+                   sep="                                                                ")
     await message.answer(f'{text.as_html()}', reply_markup=reply.del_keyboard)
 
 
