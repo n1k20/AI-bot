@@ -1,24 +1,31 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, KeyboardButtonPollType
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-
 start_keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="/menu"),
-            KeyboardButton(text="/about"),
-    ],
+            KeyboardButton(text="📁 Меню"),
+            KeyboardButton(text="🤖 О боте"),
+        ],
         [
-            KeyboardButton(text="/help"),
-            KeyboardButton(text="/payment")
+            KeyboardButton(text="🆘 Помощь"),
+            KeyboardButton(text="📋 Поддержка")
         ]
-],
+        , [
+            KeyboardButton(text="💸 Поддержка разработчиков"),
+            KeyboardButton(text="💼 Начало работы с ботом")
+        ]
+    ],
     resize_keyboard=True,
     input_field_placeholder="Выберите вариант команды"
-
 )
 
 del_keyboard = ReplyKeyboardRemove()
+
+
+
+"-----------------------------------------------------"
+
 
 
 start_keyboard_2 = ReplyKeyboardBuilder()
@@ -31,13 +38,9 @@ start_keyboard_2.add(
 )
 start_keyboard_2.adjust(2, 2)
 
-
-
 start_keyboard_3 = ReplyKeyboardBuilder()
 start_keyboard_3.attach(start_keyboard_2)
 start_keyboard_3.row(KeyboardButton(text="Отзыв о проекте"))
-
-
 
 start_keyboard_4 = ReplyKeyboardMarkup(
     keyboard=[[
@@ -50,10 +53,3 @@ start_keyboard_4 = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True,
 )
-
-
-
-
-
-
-
