@@ -37,7 +37,7 @@ async def menu(message: types.Message) -> None:
     await message.answer(text.as_html(), reply_markup=reply.start_keyboard)
 
 
-@user_private_router.message(or_f(Command('help'), F.text.lower().contains("🆘 Помощь")))
+@user_private_router.message(or_f(Command('help'), F.text.contains("🆘 Помощь")))
 async def help_cmd(message: types.Message) -> None:
     text = as_list(as_marked_section(Bold("Команды:", parse_mode=ParseMode.HTML),
                                      "🔧 /menu- Здесь находятся основные кнопки с командами, тут же вы и задаете свои приоритеты и свое дальнейшее взаимодействие с ботом",
@@ -48,21 +48,22 @@ async def help_cmd(message: types.Message) -> None:
     await message.answer(f'{text.as_html()}', reply_markup=reply.del_keyboard)
 
 
-@user_private_router.message(or_f(Command('about'), F.text.lower().contains("🤖 О боте")))
+@user_private_router.message(or_f(Command('about'), F.text.contains("🤖О боте")))
 async def about_cmd(message: types.Message) -> None:
     text = as_list(as_marked_section(
         Bold("Что делает бот 🤖 ", parse_mode=ParseMode.HTML),
-        "Основной задачей бота является структурировать информацию из ваших сообществ, сделать "
-        "ее менее навязчивой, присылая только отборный контент из ваших телеграм каналов при помощи "
+        "Основной задачей бота является структурировать информацию из ваших сообществ, сделать ",
+        "ее менее навязчивой, присылая только отборный контент из ваших телеграм каналов при помощи ",
         "слов-ключей, которые вы самолично задаете."),
         as_marked_section(Bold("Разработчики 👨‍💻", parse_mode=ParseMode.HTML),
                           "Nikolai Borgoyakov @may_flower17",
                           "Костров Владислав @underthinfluenc"),
-        sep='                                                                                                           ')
+        sep='                                                              '
+    )
     await message.answer(f"{text.as_html()}", reply_markup=reply.del_keyboard)
 
 
-@user_private_router.message(or_f(Command('payment'), F.text.contains("💸 Поддержка разработчиков")))
+@user_private_router.message(or_f(Command('payment'), F.text.contains("💸 Поддержка")))
 async def payment_cmd(message: types.Message) -> None:
     text = as_marked_section(Bold("Варианты оплаты"),
                              "💳 картой в боте",
@@ -71,7 +72,7 @@ async def payment_cmd(message: types.Message) -> None:
     await message.answer(text.as_html(), reply_markup=reply.del_keyboard)
 
 
-@user_private_router.message(or_f(Command('support'), F.text.lower.contains("📋 Поддержка")))
+@user_private_router.message(or_f(Command('support'), F.text.contains("📋 Поддержка")))
 async def support_cmd(message: types.Message) -> None:
     text = 'Если возникли вопросы по поводу бота, нашли недочеты или баги, напишите одному из разработчиков: @underthinfluenc'
     await message.answer(f"{text}", reply_markup=reply.del_keyboard)
