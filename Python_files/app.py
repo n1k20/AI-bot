@@ -28,7 +28,6 @@ admin_router.message.middleware(CounterMiddleware)
 # диспетчер через который мы будем все делать
 dispatcher = Dispatcher(fsm_strategy=FSMStrategy.USER_IN_CHAT)
 dispatcher.include_router(user_private_router)
-dispatcher.include_router(user_group_router)
 
 
 # великий main
