@@ -42,7 +42,7 @@ async def main():
 
     await dispatcher.start_polling(bot, allowed_updates=ALLOWED_UPDATES)
 
-
+# запуск бота
 if __name__ == '__main__':
 
     asyncio.run(main())
