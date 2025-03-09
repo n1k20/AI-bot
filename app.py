@@ -1,5 +1,4 @@
 import asyncio
-import os
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
@@ -17,7 +16,8 @@ from middlewares.data_base import CounterMiddleware
 load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
-bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+TOKEN = '7876780330:AAGeFkjCfdOo0YdNZliHPWkw66eTHRsETyE'
+bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 bot.my_admins_list = []
 
 ALLOWED_UPDATES = ["message, edited_message"]
