@@ -130,7 +130,7 @@ async def add_description2(message: types.Message, state: FSMContext):
     await message.answer("Вы ввели не допустимые данные, введите текст описания товара")
 
 
-# Ловим данные для состояние price и потом меняем состояние на image
+# Ловим данные для состояния price и потом меняем состояние на image
 @admin_router.message(AddProduct.price, F.text)
 async def add_price(message: types.Message, state: FSMContext):
     try:
@@ -145,21 +145,6 @@ async def add_price(message: types.Message, state: FSMContext):
 
 
 # Хендлер для отлова некорректных ввода для состояния price
-@admin_router.message(AddProduct.price)
-async def add_price2(message: types.Message, state: FSMContext):
-    await message.answer("Вы ввели не допустимые данные, введите стоимость товара")
 
 
 # Ловим данные для состояние image и потом выходим из состояний
-@admin_router.message(AddProduct.image, F.photo)
-async def add_image(message: types.Message, state: FSMContext):
-    await state.update_data(image=message.photo[-1].file_id)
-    await message.answer("Товар добавлен", reply_markup=ADMIN_KB)
-    data = await state.get_data()
-    await message.answer(str(data))
-    await state.clear()
-
-
-@admin_router.message(AddProduct.image)
-async def add_image2(message: types.Message, state: FSMContext):
-    await message.answer("Отправьте фото пищи")
