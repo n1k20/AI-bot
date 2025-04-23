@@ -9,7 +9,6 @@ from aiogram.fsm.strategy import FSMStrategy
 from dotenv import find_dotenv, load_dotenv
 
 from commands_bot.cmd_list import private_cmd
-from handlers.admin_private import admin_router
 from handlers.user_private import user_private_router
 from middlewares.data_base import CounterMiddleware
 
@@ -21,8 +20,6 @@ bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=Pars
 bot.my_admins_list = []
 
 ALLOWED_UPDATES = ["message, edited_message"]
-
-admin_router.message.middleware(CounterMiddleware)
 
 # диспетчер через который мы будем все делать
 dispatcher = Dispatcher(fsm_strategy=FSMStrategy.USER_IN_CHAT)
