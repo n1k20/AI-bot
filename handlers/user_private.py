@@ -1,18 +1,18 @@
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
 from aiogram.utils.formatting import as_list, as_marked_section, Bold
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-from filters.chat_types import ChatTypeFilter
 from keyboard import reply
 
 user_private_router = Router()
-user_private_router.message.filter(ChatTypeFilter(["private"]))
 
 """
 ---------------------------------------------------------------
 Здесь написаны все команды для меню. Их можно можно поменять доп текстом
 ---------------------------------------------------------------
 """
+
 @user_private_router.message(or_f(CommandStart(), Command('start'), F.text.contains("💼 Начало работы с ботом")))
 async def cmd_start(message: types.Message) -> None:
     text = as_list(as_marked_section(Bold("🚀 Привет! Я — твой умный помощник, который сделает Telegram еще удобнее!"),
@@ -33,4 +33,11 @@ async def support_cmd(message: types.Message) -> None:
         as_marked_section(Bold("Если у вас возникли проблемы то можете написать:"), " @mayflower17",
                           " @underthinfluenc"))
     await message.answer(text.as_html(), reply_markup=reply.del_keyboard)
+
+
+
+
+
+
+
 

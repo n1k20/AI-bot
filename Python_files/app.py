@@ -1,6 +1,10 @@
 import asyncio
 import os
 
+from Parser.parser import process_message, client
+from handlers.dynamic_channels import dynamic_channel_list
+
+
 from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -40,6 +44,20 @@ async def main():
     await dispatcher.start_polling(bot, allowed_updates=ALLOWED_UPDATES)
 
 
-if __name__ == '__main__':
+async def dynamic_parsing_loop():
+    await client.start()
+    print("Парсер запущен. Мониторинг каналов...")
+    while True:
+        for channel in list(dynamic_channel_list):
+            try:
+                async for message in client.iter_messages(channel, limit=5):
+                    await process_message(message)
+            except Exception as e:
+                print(f"Ошибка при парсинге {channel}: {e}")
+        await asyncio.sleep(60)  # пауза между циклами
 
+
+
+if __name__ == '__main__':
+    asyncio.run(dynamic_parsing_loop())
     asyncio.run(main())

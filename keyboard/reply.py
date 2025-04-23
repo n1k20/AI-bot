@@ -7,3 +7,4 @@ start_keyboard = ReplyKeyboardMarkup(
 )
 
 del_keyboard = ReplyKeyboardRemove()
+
