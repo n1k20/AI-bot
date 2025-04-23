@@ -33,3 +33,4 @@ async def support_cmd(message: types.Message) -> None:
         as_marked_section(Bold("Если у вас возникли проблемы то можете написать:"), " @mayflower17",
                           " @underthinfluenc"))
     await message.answer(text.as_html(), reply_markup=reply.del_keyboard)
+
