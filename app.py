@@ -9,7 +9,6 @@ from dotenv import find_dotenv, load_dotenv
 
 from commands_bot.cmd_list import private_cmd
 from handlers.user_private import user_private_router
-from middlewares.data_base import CounterMiddleware
 
 # ищет файл
 load_dotenv(find_dotenv())
