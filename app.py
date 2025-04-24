@@ -7,14 +7,16 @@ from aiogram.fsm.strategy import FSMStrategy
 # библиотека для защиты TOKEN
 from dotenv import find_dotenv, load_dotenv
 
-from commands_bot.cmd_list import private_cmd
-from handlers.user_private import user_private_router
+from commands_bot import private_cmd
+from handlers import user_private_router
 
 # ищет файл
 load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
 TOKEN = '7876780330:AAGeFkjCfdOo0YdNZliHPWkw66eTHRsETyE'
+
+
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 bot.my_admins_list = []
 

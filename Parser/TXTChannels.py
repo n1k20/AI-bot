@@ -2,19 +2,15 @@ import asyncio
 
 from telethon.sync import TelegramClient
 
-# необходимые данные для telethon
-api_id = 25113344
-api_hash = "69e2e4cf228276b6f774da84716cc57a"
 
-channel_username = f"https://t.me/premium/1"
-
-
-async def get_messages(channel_username):
+async def get_messages(api_id, api_hash, channel_username):
     """
     # post_link = f"https://t.me/premium/{message.id}"
     # текст медиа и все такое можно получить без проблем
-    :param channel_username: ссылка на канал
-    :return: данные текста с канала
+    :param api_id:
+    :param api_hash:
+    :param channel_username:
+    :return:
     """
     # Получение последних 100 сообщений из канала
     async with TelegramClient('session_name', api_id, api_hash) as client:
@@ -22,9 +18,10 @@ async def get_messages(channel_username):
             print("+-----------------------------------------------------+")
             # ID поста - только число
             print(message.id)
-            # текст
-
+            # Это для текста
+            print(message.text)
             print("+-----------------------------------------------------+")
 
 
-asyncio.run(get_messages(channel_username))
+if __name__ == "__main__":
+    asyncio.run(get_messages())
