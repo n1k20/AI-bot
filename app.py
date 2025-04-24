@@ -20,7 +20,6 @@ bot.my_admins_list = []
 
 ALLOWED_UPDATES = ["message, edited_message"]
 
-
 # диспетчер через который мы будем все делать
 dispatcher = Dispatcher(fsm_strategy=FSMStrategy.USER_IN_CHAT)
 dispatcher.include_router(user_private_router)
