@@ -1,27 +1,38 @@
+from typing import Dict, Any
+
 import requests
 from handlers.config import API_KEY, FOLDER_ID, YANDEX_URL
 
-def analyze_text(text: str) -> str:
-    payload = {
-        "modelUri": f"gpt://{FOLDER_ID}/yandexgpt-lite",
-        "completionOptions": {"stream": False, "temperature": 0.6, "maxTokens": "200"},
+def analyze_text(text: str) -> dict[str, str | Any]:
+    prompt = {
+        "modelUri": f"gpt://{FOLDER_ID}/yandexgpt",
+        "completionOptions": {"stream": False, "temperature": 0.4, "maxTokens": "1000"},
         "messages": [
             {
                 "role": "system",
-                "text": "Ты помощник, который определяет интерес человека по тексту и предлагает каналы в Telegram по теме."
+                "text": "Ты — профессиональный классификатор интересов пользователей.\n"
+                        "Твоя задача: на основе запроса пользователя выдать наиболее точную и узкую категорию интереса.\n"
+                        "Отвечай одним-двумя словами (например: Python, Баскетбол, Криптовалюта, Стартапы).\n"
+                        "Не обобщай (не Технологии, а Python; не Спорт, а Баскетбол).Только при условии что у него не написано Спорт, Технологии, а указано что то конкретное\n"
+                        "Не добавляй описаний, не придумывай списков каналов. Только название интереса.\n"
             },
             {
                 "role": "user",
-                "text": f"Вот сообщение: {text}\nОпредели интерес и предложи 3 Telegram-канала, которые подойдут для него. Формат: \nИнтерес: ... \nКаналы: \n1. @channel1\n2. @channel2\n3. @channel3"
+                "text": text
             }
         ]
     }
     headers = {"Content-Type": "application/json", "Authorization": f"Api-Key {API_KEY}"}
-    response = requests.post(YANDEX_URL, headers=headers, json=payload)
-    return response.json()['result']['alternatives'][0]['message']['text'].strip()
+    response = requests.post(YANDEX_URL, headers=headers, json=prompt)
 
-def parse_yandex_response(response_text: str):
-    lines = response_text.strip().splitlines()
-    interest = lines[0].replace("Интерес:", "").strip()
-    channels = [line.split(".", 1)[1].strip() for line in lines[2:] if line.strip()]
-    return interest, channels
+    result_text = response.json()['result']['alternatives'][0]['message']['text'].strip()
+    result_lines = result_text.splitlines()
+
+    result = {
+        "topic": "",
+        "channel_type": "",
+        "popularity": ""
+    }
+
+    result = response.json()
+    return result['result']['alternatives'][0]['message']['text'].strip()

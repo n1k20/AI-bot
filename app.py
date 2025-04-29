@@ -15,7 +15,7 @@ from middlewares.data_base import CounterMiddleware
 load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
-TOKEN = '7876780330:AAGeFkjCfdOo0YdNZliHPWkw66eTHRsETyE'
+TOKEN = '7876780330:AAFcfzlCGkxOmKL5KocIyFL2cGLfe6z61E0'
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 bot.my_admins_list = []
 
