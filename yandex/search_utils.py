@@ -1,7 +1,9 @@
+import re
+
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-import re
+
 
 def search_google(interest):
     headers = {"User-Agent": UserAgent().random}

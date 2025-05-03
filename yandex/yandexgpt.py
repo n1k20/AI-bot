@@ -1,7 +1,9 @@
-from typing import Dict, Any
+from typing import Any
 
 import requests
-from handlers.config import API_KEY, FOLDER_ID, YANDEX_URL
+
+from config import API_KEY, FOLDER_ID, YANDEX_URL
+
 
 def analyze_text(text: str) -> dict[str, str | Any]:
     prompt = {

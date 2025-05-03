@@ -1,10 +1,12 @@
 from telethon import TelegramClient
 from telethon.errors import UsernameInvalidError, UsernameNotOccupiedError
 from telethon.tl.functions.contacts import ResolveUsernameRequest
+
 from config import API_ID, API_HASH
 
 # Инициализируем Telethon-клиент один раз
 client = TelegramClient("channel_checker", API_ID, API_HASH)
+
 
 async def is_channel(username: str) -> bool:
     """

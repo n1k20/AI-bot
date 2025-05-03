@@ -4,19 +4,12 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.strategy import FSMStrategy
-# библиотека для защиты TOKEN
-from dotenv import find_dotenv, load_dotenv
-
+from config import TOKEN
 from commands_bot import private_cmd
 from handlers import user_private_router
-from Parser.parser import process_message, client
-from handlers.dynamic_channels import dynamic_channel_list
+from parser.parser import process_message, client
+from yandex import dynamic_channel_list
 
-# ищет файл
-load_dotenv(find_dotenv())
-
-# наш бот через которого мы будем все писать
-TOKEN = ""
 
 
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))

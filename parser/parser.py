@@ -1,8 +1,8 @@
 from telethon import TelegramClient
-from handlers.config import API_ID, API_HASH
-from handlers.yandexgpt import analyze_text, parse_yandex_response
+from config import API_ID, API_HASH
+from yandex.yandexgpt import analyze_text, parse_yandex_response
 from middlewares.DataBaseConnection import save_interest
-from handlers.dynamic_channels import add_new_channels
+from yandex.dynamic_channels import add_new_channels
 
 client = TelegramClient('session_name', API_ID, API_HASH)
 
