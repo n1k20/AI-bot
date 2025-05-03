@@ -9,12 +9,14 @@ from dotenv import find_dotenv, load_dotenv
 
 from commands_bot import private_cmd
 from handlers import user_private_router
+from Parser.parser import process_message, client
+from handlers.dynamic_channels import dynamic_channel_list
 
 # ищет файл
 load_dotenv(find_dotenv())
 
 # наш бот через которого мы будем все писать
-TOKEN = '7876780330:AAGeFkjCfdOo0YdNZliHPWkw66eTHRsETyE'
+TOKEN = ""
 
 
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))

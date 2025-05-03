@@ -4,15 +4,6 @@ from telethon.sync import TelegramClient
 
 
 async def forward_post(api_id, api_hash, phone, post_url, bot_chat):
-    """
-
-    :param api_id:
-    :param api_hash:
-    :param phone:
-    :param post_url:
-    :param bot_chat:
-    :return:
-    """
     async with TelegramClient('Parser_session', api_id, api_hash) as client:
         await client.start(phone)
         if "/c/" in post_url:
