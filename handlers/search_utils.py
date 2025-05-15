@@ -11,7 +11,7 @@ def search_google(interest):
     url = f"https://www.google.com/search?q={query}+site:tgstat.ru+OR+site:telemetr.me"
 
     response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
+    soup = BeautifulSoup(response.text, "html.Parser")
 
     links = []
     for a in soup.select("a"):
