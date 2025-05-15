@@ -11,8 +11,8 @@ from aiogram.utils.formatting import as_list, as_marked_section, Bold
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-from Parser.post_parser import get_posts_for_channels
-from handlers.main_logic import process_user_message
+from Parser import get_posts_for_channels
+from handlers import process_user_message
 
 user_interests = {}
 scheduler = AsyncIOScheduler(event_loop=asyncio.get_event_loop())

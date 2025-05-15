@@ -1,0 +1,1 @@
+from .cmd_list import private_cmd

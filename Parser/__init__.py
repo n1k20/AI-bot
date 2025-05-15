@@ -1,0 +1,1 @@
+from .post_parser import get_posts_for_channels
