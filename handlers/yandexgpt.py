@@ -1,7 +1,10 @@
-from typing import Dict, Any
+import re
+from typing import Any
 
 import requests
-from handlers.config import API_KEY, FOLDER_ID, YANDEX_URL
+
+from config import API_KEY, FOLDER_ID, YANDEX_URL
+
 
 def analyze_text(text: str) -> dict[str, str | Any]:
     prompt = {
@@ -25,14 +28,24 @@ def analyze_text(text: str) -> dict[str, str | Any]:
     headers = {"Content-Type": "application/json", "Authorization": f"Api-Key {API_KEY}"}
     response = requests.post(YANDEX_URL, headers=headers, json=prompt)
 
-    result_text = response.json()['result']['alternatives'][0]['message']['text'].strip()
-    result_lines = result_text.splitlines()
+    # Ответ от Yandex Cloud
+    result = response.json()['result']['alternatives'][0]['message']['text'].strip()
 
-    result = {
-        "topic": "",
-        "channel_type": "",
-        "popularity": ""
-    }
+    return result
 
-    result = response.json()
-    return result['result']['alternatives'][0]['message']['text'].strip()
+
+def parse_yandex_response(response_text: str) -> tuple[str, str]:
+    """
+    Извлекает интерес и текстовый ответ из ответа YandexGPT.
+    Предполагается, что YandexGPT возвращает текст вроде:
+    "Интерес: программирование\n\nОписание: Это..."
+    """
+
+    # Поиск строки "Интерес: ..."
+    interest_match = re.search(r"Интерес\s*[:\-]\s*(.+)", response_text, re.IGNORECASE)
+    interest = interest_match.group(1).strip().lower() if interest_match else "неопределено"
+
+    words = list(dict.fromkeys([word.strip() for word in re.split(r"[,\n]", interest)]))  # убираем повторы
+    interest = ", ".join(words)
+
+    return interest, response_text.strip()

@@ -1,9 +1,11 @@
-from typing import List, Optional
-from telethon import TelegramClient
-from telethon.tl.types import Message, MessageMediaPhoto, MessageMediaDocument
-from handlers.config import API_ID, API_HASH
+
 import re
-import asyncio
+from typing import List, Optional
+
+from telethon import TelegramClient
+from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
+
+from config import API_ID, API_HASH
 
 client = TelegramClient("post_parser", API_ID, API_HASH)
 
@@ -51,6 +53,7 @@ async def parse_latest_post(channel_username: str, limit: int = 1) -> List[Optio
     finally:
         if client.is_connected():
             await client.disconnect()
+
 
 async def get_posts_for_channels(channels: List[str], limit: int = 1) -> List[dict]:
     posts = []

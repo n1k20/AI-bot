@@ -1,16 +1,18 @@
+import asyncio
+import html
+import re
+import traceback
 from typing import List
+
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
-from aiogram.utils.formatting import as_list, as_marked_section, Bold
-from handlers.main_logic import process_user_message
-from Parser.post_parser import get_posts_for_channels
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import html
+from aiogram.utils.formatting import as_list, as_marked_section, Bold
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import traceback
-import asyncio
-import re
+
+from Parser.post_parser import get_posts_for_channels
+from handlers.main_logic import process_user_message
 
 user_interests = {}
 scheduler = AsyncIOScheduler(event_loop=asyncio.get_event_loop())
@@ -29,6 +31,7 @@ FREQUENCIES = {
     "5_days": 432000
 }
 
+
 def get_frequency_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
@@ -44,6 +47,7 @@ def get_frequency_keyboard() -> InlineKeyboardMarkup:
             ]
         ]
     )
+
 
 async def send_post_to_user(user_id: int, post: dict, bot):
     try:
@@ -69,6 +73,7 @@ async def send_post_to_user(user_id: int, post: dict, bot):
         print(f"[Ошибка при отправке поста пользователю {user_id}]: {e}")
         print(f"[Traceback]: {traceback.format_exc()}")
 
+
 async def schedule_posts(user_id: int, channels: List[str], frequency: int, bot):
     async def job():
         posts = await get_posts_for_channels(channels, limit=1)
@@ -88,6 +93,7 @@ async def schedule_posts(user_id: int, channels: List[str], frequency: int, bot)
         replace_existing=True
     )
 
+
 async def send_initial_posts(user_id: int, channels: List[str], bot):
     try:
         posts = await get_posts_for_channels(channels, limit=2)
@@ -95,6 +101,7 @@ async def send_initial_posts(user_id: int, channels: List[str], bot):
             await send_post_to_user(user_id, post, bot)
     except Exception as e:
         print(f"[Ошибка при отправке начальных постов пользователю {user_id}]: {e}")
+
 
 @user_private_router.message(or_f(CommandStart(), Command('start'), F.text.contains("💼 Начало работы с ботом")))
 async def cmd_start(message: types.Message) -> None:
@@ -106,12 +113,14 @@ async def cmd_start(message: types.Message) -> None:
                                      "Давай начнем? Расскажи мне о своих предпочтениях, и я всё устрою!"))
     await message.answer(text.as_html(), reply_markup=reply.start_keyboard)
 
+
 @user_private_router.message(or_f(Command('support'), F.text.contains("📋 Поддержка")))
 async def support_cmd(message: types.Message) -> None:
     text = as_list(
         as_marked_section(Bold("Если у вас возникли проблемы то можете написать:"), " @mayflower17",
                           " @underthinfluenc"))
     await message.answer(text.as_html(), reply_markup=reply.del_keyboard)
+
 
 @user_private_router.message()
 async def handle_message(message: types.Message, bot):
@@ -140,7 +149,8 @@ async def handle_message(message: types.Message, bot):
     user_interests[user_id] = {
         "interest": interest,
         "channels": channels_text,
-        "channel_usernames": [re.sub(r"^\d+\.\s*", "", line.split(" — ")[0]) for line in channels_text.split("\n") if line]  # Исправлено
+        "channel_usernames": [re.sub(r"^\d+\.\s*", "", line.split(" — ")[0]) for line in channels_text.split("\n") if
+                              line]  # Исправлено
     }
 
     try:
@@ -157,6 +167,7 @@ async def handle_message(message: types.Message, bot):
     except Exception as e:
         print(f"[Ошибка при отправке]: {e}")
         await message.answer("❌ Не удалось отправить сообщение. Возможно, ошибка форматирования.", parse_mode="HTML")
+
 
 @user_private_router.callback_query(lambda c: c.data.startswith("freq_"))
 async def set_frequency(callback: types.CallbackQuery, bot):
@@ -191,6 +202,7 @@ async def set_frequency(callback: types.CallbackQuery, bot):
     asyncio.create_task(send_initial_posts(user_id, channels, bot))
     await schedule_posts(user_id, channels, frequency, bot)
 
+
 @user_private_router.callback_query(lambda c: c.data == "change_interest")
 async def change_interest_handler(callback: types.CallbackQuery):
     user_id = callback.from_user.id
@@ -200,6 +212,7 @@ async def change_interest_handler(callback: types.CallbackQuery):
     await callback.message.answer("✏️ Напиши новый интерес.", parse_mode="HTML")
     await callback.answer()
 
+
 def get_change_interest_kb():
     return InlineKeyboardMarkup(
         inline_keyboard=[
@@ -207,9 +220,5 @@ def get_change_interest_kb():
         ]
     )
 
+
 scheduler.start()
-
-
-
-
-

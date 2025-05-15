@@ -1,6 +1,6 @@
 from telethon import TelegramClient
 from telethon.tl.functions.contacts import SearchRequest
-from handlers.config import API_ID, API_HASH
+from config import API_ID, API_HASH
 
 client = TelegramClient("search_session", API_ID, API_HASH)
 
