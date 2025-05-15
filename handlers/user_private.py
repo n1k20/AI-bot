@@ -17,7 +17,7 @@ from handlers.main_logic import process_user_message
 user_interests = {}
 scheduler = AsyncIOScheduler(event_loop=asyncio.get_event_loop())
 last_post_ids = {}
-K
+
 from keyboard import reply
 
 user_private_router = Router()

@@ -8,7 +8,7 @@ from fake_useragent import UserAgent
 def extract_telegram_channels_from_url(url: str):
     headers = {"User-Agent": UserAgent().random}
     response = requests.get(url, headers=headers, timeout=10)
-    soup = BeautifulSoup(response.text, "html.Parser")
+    soup = BeautifulSoup(response.text, "html.parser")
 
     text = soup.get_text()
     matches = re.findall(r"@[\w\d_]{4,}", text)

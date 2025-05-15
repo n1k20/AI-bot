@@ -6,11 +6,11 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.strategy import FSMStrategy
 from telethon import TelegramClient
 
-from handlers import process_message
-from commands_bot import private_cmd
+from Parser.parser import process_message
+from commands_bot.cmd_list import private_cmd
 from config import TOKEN, API_HASH, API_ID
-from handlers import dynamic_channel_list
-from handlers import user_private_router
+from handlers.dynamic_channels import dynamic_channel_list
+from handlers.user_private import user_private_router
 
 # наш бот через которого мы будем все писать
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -53,9 +53,6 @@ async def dynamic_parsing_loop():
         await asyncio.sleep(60)  # пауза между циклами
 
 
-async def run_all():
-    await asyncio.gather(main(), dynamic_parsing_loop())
-
-
 if __name__ == '__main__':
-    asyncio.run(run_all())
+    asyncio.run(dynamic_parsing_loop())
+    asyncio.run(main())
