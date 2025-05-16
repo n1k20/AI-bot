@@ -8,4 +8,3 @@ FOLDER_ID = "b1gutd9qcon0kgjuali7"
 YANDEX_URL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 
 DB_DSN = "postgresql://gen_user:1234567890a@host:port/default_db"
-

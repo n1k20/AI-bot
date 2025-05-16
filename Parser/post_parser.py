@@ -1,4 +1,3 @@
-
 import re
 from typing import List, Optional
 
@@ -8,6 +7,7 @@ from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 from config import API_ID, API_HASH
 
 client = TelegramClient("post_parser", API_ID, API_HASH)
+
 
 async def parse_latest_post(channel_username: str, limit: int = 1) -> List[Optional[dict]]:
     try:

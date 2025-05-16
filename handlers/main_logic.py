@@ -1,5 +1,6 @@
-from handlers.yandexgpt import analyze_text
 from handlers.telegram_search import search_channels_by_keyword
+from handlers.yandexgpt import analyze_text
+
 
 async def process_user_message(user_text: str) -> tuple[str, str]:
     interest = analyze_text(user_text).lower().strip()
@@ -17,7 +18,6 @@ async def process_user_message(user_text: str) -> tuple[str, str]:
 
     # ВОТ ЗДЕСЬ — выводим до 10 каналов
     formatted = "\n".join([
-        f"{i+1}. {ch[0]} — {ch[1]}" for i, ch in enumerate(channels[:10])
+        f"{i + 1}. {ch[0]} — {ch[1]}" for i, ch in enumerate(channels[:10])
     ])
     return interest, formatted
-

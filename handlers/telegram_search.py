@@ -1,8 +1,10 @@
 from telethon import TelegramClient
 from telethon.tl.functions.contacts import SearchRequest
+
 from config import API_ID, API_HASH
 
 client = TelegramClient("search_session", API_ID, API_HASH)
+
 
 async def search_channels_by_keyword(keyword: str) -> list[tuple[str, str]]:
     await client.start()
@@ -14,5 +16,3 @@ async def search_channels_by_keyword(keyword: str) -> list[tuple[str, str]]:
         if getattr(chat, "broadcast", False) and chat.username:
             channels.append((f"@{chat.username}", chat.title))
     return channels
-
-

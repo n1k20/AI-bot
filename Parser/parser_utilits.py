@@ -1,10 +1,11 @@
+"""
 import re
 
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
-"""
+
 def extract_telegram_channels_from_url(url: str):
     headers = {"User-Agent": UserAgent().random}
     response = requests.get(url, headers=headers, timeout=10)
@@ -14,6 +15,7 @@ def extract_telegram_channels_from_url(url: str):
     matches = re.findall(r"@[\w\d_]{4,}", text)
     return list(set(matches))
 """
+
 
 def is_probable_channel(username: str) -> bool:
     """

@@ -1,6 +1,4 @@
-from handlers.dynamic_channels import add_new_channels
-from handlers.yandexgpt import analyze_text
-from handlers.yandexgpt import parse_yandex_response
+from handlers import add_new_channels, analyze_text, parse_yandex_response
 
 
 # from middlewares.DataBaseConnection import save_interest
@@ -13,5 +11,3 @@ async def process_message(message: str):
         # username = message.sender.username if message.sender else "unknown"
         # await save_interest(interest, username)
         add_new_channels(channels)
-
-
