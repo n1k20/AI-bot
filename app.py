@@ -4,11 +4,11 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.strategy import FSMStrategy
-from telethon import TelegramClient
 
 from Parser.parser import process_message
 from commands_bot import private_cmd
-from config import TOKEN, API_HASH, API_ID
+from config import TOKEN
+from telegram_client import client
 from handlers import dynamic_channel_list
 from handlers import user_private_router
 
@@ -37,20 +37,20 @@ async def main():
     await dispatcher.start_polling(bot, allowed_updates=ALLOWED_UPDATES)
 
 
-client = TelegramClient("session", api_hash=API_HASH, api_id=API_ID)
-
-
 async def dynamic_parsing_loop():
     await client.start()
-    print("Парсер запущен. Мониторинг каналов...")
-    while True:
-        for channel in list(dynamic_channel_list):
-            try:
-                async for message in client.iter_messages(channel, limit=5):
-                    await process_message(message)
-            except Exception as e:
-                print(f"Ошибка при парсинге {channel}: {e}")
-        await asyncio.sleep(60)  # пауза между циклами
+    try:
+        print("Парсер запущен. Мониторинг каналов...")
+        while True:
+            for channel in list(dynamic_channel_list):
+                try:
+                    async for message in client.iter_messages(channel, limit=5):
+                        await process_message(message)
+                except Exception as e:
+                    print(f"Ошибка при парсинге {channel}: {e}")
+            await asyncio.sleep(60)  # пауза между циклами
+    finally:
+        await client.stop()
 
 
 if __name__ == '__main__':

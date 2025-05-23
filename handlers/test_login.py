@@ -1,14 +1,13 @@
-from telethon import TelegramClient
-
-from config import API_ID, API_HASH
-
-client = TelegramClient("search_session", API_ID, API_HASH)
+from telegram_client import client
 
 
 async def main():
-    await client.start()  # ВАЖНО: ничего не передавать!
-    print("✅ Авторизация прошла успешно")
-
+    try:
+        if not client.is_connected():
+            await client.start()
+        print("✅ Авторизация прошла успешно")
+    except Exception as error:
+        print(f"Ошибка : {error}")
 
 with client:
     client.loop.run_until_complete(main())

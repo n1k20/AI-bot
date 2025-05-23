@@ -1,4 +1,4 @@
-"""
+
 import re
 
 import requests
@@ -14,7 +14,7 @@ def extract_telegram_channels_from_url(url: str):
     text = soup.get_text()
     matches = re.findall(r"@[\w\d_]{4,}", text)
     return list(set(matches))
-"""
+
 
 
 def is_probable_channel(username: str) -> bool:

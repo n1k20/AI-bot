@@ -1,13 +1,8 @@
 import re
 from typing import List, Optional
-
-from telethon import TelegramClient
 from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 
-from config import API_ID, API_HASH
-
-client = TelegramClient("post_parser", API_ID, API_HASH)
-
+from telegram_client import client
 
 async def parse_latest_post(channel_username: str, limit: int = 1) -> List[Optional[dict]]:
     try:
@@ -47,12 +42,9 @@ async def parse_latest_post(channel_username: str, limit: int = 1) -> List[Optio
 
         return posts
 
-    except Exception as e:
-        print(f"[Ошибка при парсинге {channel_username}]: {e}")
+    except Exception as error:
+        print(f"[Ошибка при парсинге {channel_username}]: {error}")
         return []
-    finally:
-        if client.is_connected():
-            await client.disconnect()
 
 
 async def get_posts_for_channels(channels: List[str], limit: int = 1) -> List[dict]:
