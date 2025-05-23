@@ -66,9 +66,6 @@ async def run_bot():
 
 
 async def main():
-    """
-    Главная функция для запуска всех задач
-    """
     tasks = [
         asyncio.create_task(run_bot()),
         asyncio.create_task(dynamic_parsing_loop())

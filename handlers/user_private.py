@@ -13,7 +13,6 @@ from aiogram.utils.formatting import as_list, as_marked_section, Bold
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-from Parser import get_posts_for_channels
 from handlers import process_user_message
 from telegram_client import client
 
@@ -93,6 +92,7 @@ async def send_post_to_user(user_id: int, post: dict, bot):
 
 
 async def schedule_posts(user_id: int, channels: List[str], frequency: int, bot):
+    from Parser import get_posts_for_channels
     async def job():
         posts = await get_posts_for_channels(channels, limit=1)
         for post in posts:
@@ -113,6 +113,7 @@ async def schedule_posts(user_id: int, channels: List[str], frequency: int, bot)
 
 
 async def send_initial_posts(user_id: int, channels: List[str], bot):
+    from Parser import get_posts_for_channels
     try:
         posts = await get_posts_for_channels(channels, limit=2)
         for post in posts:
