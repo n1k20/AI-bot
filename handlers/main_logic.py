@@ -1,5 +1,5 @@
 from handlers.telegram_search import search_channels_by_keyword
-from handlers.yandexgpt import analyze_text
+from services.yandexgpt import analyze_text
 
 
 async def process_user_message(user_text: str) -> tuple[str, str]:

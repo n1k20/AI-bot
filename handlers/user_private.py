@@ -2,17 +2,20 @@ import asyncio
 import html
 import re
 import traceback
+from io import BytesIO
 from typing import List
 
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command, or_f
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InputFile
 from aiogram.utils.formatting import as_list, as_marked_section, Bold
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
 from Parser import get_posts_for_channels
 from handlers import process_user_message
+from telegram_client import client
 
 user_interests = {}
 scheduler = AsyncIOScheduler(event_loop=asyncio.get_event_loop())
@@ -59,19 +62,34 @@ async def send_post_to_user(user_id: int, post: dict, bot):
 
         if post["media"]:
             media = post["media"][0]
+
             if media["type"] == "photo":
-                await bot.send_photo(user_id, media["id"], caption=text, parse_mode="HTML")
+                # Скачиваем фото через Telethon
+                photo_data = await client.download_media(media["id"], bytes)
+
+                # Создаем InputFile для aiogram
+                photo_file = InputFile(BytesIO(photo_data), filename="photo.jpg")
+                await bot.send_photo(user_id, photo_file, caption=text, parse_mode="HTML")
+
             elif "video" in media["type"]:
-                await bot.send_video(user_id, media["id"], caption=text, parse_mode="HTML")
+                video_data = await client.download_media(media["id"], bytes)
+                video_file = InputFile(BytesIO(video_data), filename="video.mp4")
+                await bot.send_video(user_id, video_file, caption=text, parse_mode="HTML")
+
             elif "document" in media["type"]:
-                await bot.send_document(user_id, media["id"], caption=text, parse_mode="HTML")
+                doc_data = await client.download_media(media["id"], bytes)
+                doc_file = InputFile(BytesIO(doc_data), filename="document.pdf")
+                await bot.send_document(user_id, doc_file, caption=text, parse_mode="HTML")
+
             else:
                 await bot.send_message(user_id, text, parse_mode="HTML")
         else:
             await bot.send_message(user_id, text, parse_mode="HTML")
+
     except Exception as e:
         print(f"[Ошибка при отправке поста пользователю {user_id}]: {e}")
         print(f"[Traceback]: {traceback.format_exc()}")
+        await bot.send_message(user_id, "❌ Не удалось отправить медиафайл")
 
 
 async def schedule_posts(user_id: int, channels: List[str], frequency: int, bot):

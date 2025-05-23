@@ -1,8 +1,10 @@
+from config import license, author, mail, status
 from .cmd_list import private_cmd
 
 __all__ = ["private_cmd"]
 
-__version__ = "0.1.0"
-__license__ = "NSU"
-__author__ = "Nikolay Borgoyakov"
-__email__ = "nik.borgoyakov@bk.ru"
+__version__ = "0.0.1"
+__license__ = f"{license}"
+__author__ = f"{author}"
+__mail__ = f"{mail}"
+__status__ = f"{status}"
